@@ -30,26 +30,30 @@ class Agreement(object):
         s = ""
         for i in range(0,5): 
             s = s + message[i]
-        '''
         print("encode %s"%message)
         print(self.source),
         print(self.destination),
         print(self.type),
         print(self.data_0),
         print(self.data_1)
-        print(len(s))
-        '''
+
         return s
 
     def decode(self, s):
         "解码 把 字符串数据解析存放在各个字段"
         message = list(s)
-        #print(message)
-        self.source = ord(message[0])
-        self.destination = ord(message[1])
-        self.type = ord(message[2])
-        self.data_0 = ord(message[3])
-        self.data_1 = ord(message[4])
+        print("decode %s"%message)
+        if(len(message) >= 5):
+            self.source = ord(message[0])
+            self.destination = ord(message[1])
+            self.type = ord(message[2])
+            self.data_0 = ord(message[3])
+            self.data_1 = ord(message[4])
+        print(self.source),
+        print(self.destination),
+        print(self.type),
+        print(self.data_0),
+        print(self.data_1)
         
         
 

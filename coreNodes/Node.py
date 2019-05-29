@@ -76,11 +76,12 @@ class Node(object):
         #将主节点的设备信息发布出去
         print ("sendInfo")
         self.__agreement.source = self.__id
-        self.__agreement.destination = 0x00
+        self.__agreement.destination = 0xff
         self.__agreement.type = 0x02
         self.__agreement.data_0 = self.__function & 0x1100
         self.__agreement.data_1 = self.__function & 0x0011
         self.__serialPort.write(self.__agreement.encode())
+        time.sleep(0.01)
     
 
     def translate(self):
@@ -101,5 +102,16 @@ class Node(object):
             self.translate()
         else:
             print("其他消息")
-            print(s)
             
+    
+    def printInfo(self):
+        #打印出当前节点状态
+        print("\n\nid %s,"%self.__id),
+        print("function %s"%self.__function)
+        print("routingList :"),
+        for i in range(0, self.__length):
+            print(self.__routingList[i]),
+        print("\nfunctionList :"),
+        for i in range(0, self.__length):
+            print(self.__routingList[i]),
+        print("")
