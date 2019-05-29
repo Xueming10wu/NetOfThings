@@ -19,9 +19,10 @@ class Agreement
     const int destinationSize;
     const int typeSize;
     const int dataSize;
+    int sumSize;
 
   private:
-    int sumSize;
+    
 };
 
 #endif // AGREEMENT_H
