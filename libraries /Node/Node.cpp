@@ -46,7 +46,11 @@ void Node::sendInfo()
     agreement.data_1 = function_ & 0x0011;
     //std::cout << agreement.encode() << std::endl;
     const char *s = agreement.encode();
-    Serial.println(s);
+    for(int i = 0 ; i < agreement.sumSize ; i ++)
+    {
+        Serial.write(s[i]);
+    }
+    Serial.println();
     delete s;
     s = NULL;
 }
@@ -141,21 +145,61 @@ void Node::sendData(int data)
     //std::cout << "sendData\n";
     agreement.source = id_;
     agreement.type = 0xff;
-    agreement.data_0 = data & 0xff00;
+    agreement.data_0 = data >> 8;
     agreement.data_1 = data & 0x00ff;
     for(int i = 0 ; i < length_; i++)
     {
-        if( function_ == functionList_[i] )
+        if( function_ & functionList_[i] > 0 )
         {
             agreement.destination = routingList_[i];
             //std::cout << agreement.encode() << std::endl;
             const char *s = agreement.encode();
-            Serial.println(s);
+            for(int i = 0 ; i < agreement.sumSize ; i ++)
+            {
+                Serial.write(s[i]);
+            }
+            Serial.println();
             delete s;
             s = NULL;
         }
     }
 }
+
+
+void Node::sendData(int data, int destination)
+{
+    //std::cout << "sendData\n";
+    agreement.source = id_;
+    agreement.destination = destination;
+    agreement.type = 0xff;
+    agreement.data_0 = data >> 8;
+    agreement.data_1 = data & 0x00ff;
+    const char *s = agreement.encode();
+    for(int i = 0 ; i < agreement.sumSize ; i ++)
+    {
+        Serial.write(s[i]);
+    }
+    Serial.println();
+    delete s;
+    s = NULL;
+}
+
+
+//过滤器，如果消息源头有效，那么返回true。否则返回false
+bool Node::filter() const
+{
+    if(getAgreement().source != id_)
+    {//判断是否出现链路回传。如果是回传，那么拒收消息
+        if((getAgreement().destination == id_ )|| (getAgreement().destination == 0xff))
+        {//如果消息的目标是本节点编号，或者是多播类型，那么接收消息
+            return true;
+        }
+    }
+    return false;
+}
+
+//测试
+
 
 Node::~Node()
 {

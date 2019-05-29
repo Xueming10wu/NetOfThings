@@ -37,6 +37,12 @@ class Node
         //发送常规传感器数据，data字段的前4位确定传感器类型，后12位，确定具体的数据
         void sendData(int data);
 
+        //发送常规传感器数据，data字段的前4位确定传感器类型，后12位，确定具体的数据。输入8位二进制目标地址
+        void sendData(int data, int destination);
+
+        //过滤器，如果消息源头有效，那么返回true。否则返回false
+        bool filter() const;
+
     private:
         const int id_;//设备编号，固定8位二进制
         const int function_;//提供的功能，固定16位二进制
