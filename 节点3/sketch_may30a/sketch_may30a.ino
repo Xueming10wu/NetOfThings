@@ -1,25 +1,19 @@
-
-#include <dht11.h>
 #include <Arduino.h>
 #include <Node.h>
-
-const int DHT11_Pin = 6;
-const int Light_Pin = A0;
-const int Wine_Pin = A1;
+//土壤传感器节点
+const int earth_Pin = A1;
 
 void setup()
 {
   Serial.begin(9600);
-  pinMode(DHT11_Pin, INPUT);
 }
 
 int main()
 {
   init();
   setup();
-  dht11 DHT11;
 
-  int id = 0x01, func = 0x001b;
+  int id = 0x03, func = 0x0004;
   Node node = Node(id, func);
   char *s = new char[node.getAgreement().sumSize];
   int downloaddata = 0x0000;
@@ -52,28 +46,16 @@ int main()
     else
     {
       //上行数据代码区域和普通执行区域
-      int chk = DHT11.read(DHT11_Pin);//读数据
-      
       //无限制广播到所有节点上
-      int temperature = DHT11.temperature;//温度0x0
-      int t = temperature + (0x0 << 10) + (0x0 << 12);
-      node.sendData(t, 0xff);
-
-      int humidity = DHT11.humidity;//湿度0x1
-      int h = humidity + (0x0 << 10) + (0x1 << 12);
-      node.sendData(h, 0xff);
-
       //测试节点表长
       //int len = node.getLength();
       //node.sendData(l, 0x02);
-
-      int wine = analogRead(Wine_Pin);
-      int w = wine + (0x0 << 10) + (0x4 << 12);
-      node.sendData(w, 0xff);
       
-      int light = analogRead(Light_Pin);
-      int l = light + (0x0 << 10) + (0x3 << 12);
-      node.sendData(l, 0xff);
+      int earth_val = 1023 - analogRead(earth_Pin);
+      int e = earth_val + (0x3 << 10) + (0x2 << 12);
+
+      //Serial.println(earth_val);
+      node.sendData(e, 0xff);
       delay(2000);
     }
     

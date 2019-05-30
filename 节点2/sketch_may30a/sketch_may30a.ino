@@ -19,7 +19,7 @@ int main()
   setup();
   dht11 DHT11;
 
-  int id = 0x01, func = 0x001b;
+  int id = 0x02, func = 0x001b;
   Node node = Node(id, func);
   char *s = new char[node.getAgreement().sumSize];
   int downloaddata = 0x0000;
