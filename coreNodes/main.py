@@ -7,7 +7,7 @@ def main():
     "主函数"
     id = 0x0d
     func = 0x0000
-    portname = '/dev/ttyACM0'
+    portname = '/dev/xbee'
     baudrate = 9600
     node = Node(id, func, portname, baudrate)
     serialPort = node.getSerialPort()
@@ -33,3 +33,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+#03ffff2c00

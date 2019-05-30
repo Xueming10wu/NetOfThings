@@ -110,8 +110,8 @@ class Node(object):
         print("function %s"%self.__function)
         print("routingList :"),
         for i in range(0, self.__length):
-            print(self.__routingList[i]),
+            print(hex(self.__routingList[i])),
         print("\nfunctionList :"),
         for i in range(0, self.__length):
-            print(self.__routingList[i]),
+            print(hex(self.__functionList[i])),
         print("")
