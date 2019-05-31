@@ -51,18 +51,14 @@ int main()
         if (node.filter())
         {
           
-          lcd.clear();
-          lcd.setCursor(0, 0);
+          //lcd.clear();
+          //lcd.setCursor(0, 0);
           downloaddata = (node.getAgreement().data_0 << 8) | node.getAgreement().data_1 ;
-          lcd.print(downloaddata,BIN);
+          //lcd.print(downloaddata,BIN);
           /*
           lcd.setCursor(0, 1);
           lcd.print(node.getAgreement().data_1,BIN);
           */
-        }
-        else
-        {
-          node.sendData(0);
         }
       }
     }
@@ -105,8 +101,13 @@ int main()
         if( (downloaddata & 0x0c00 ) == 0x0c00  )
         { 
           goal = (downloaddata & 0x03ff);
+          lcd.clear();
+          lcd.setCursor(0, 0);
           lcd.print("goal: ");
           lcd.print(goal);
+          lcd.setCursor(0, 1);
+          lcd.print("real: ");
+          lcd.print(earth_val);
         }
       }
       //int e = earth_val + (0x0 << 10) + (0x2 << 12);

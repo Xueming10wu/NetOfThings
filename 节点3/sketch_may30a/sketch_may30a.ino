@@ -37,10 +37,6 @@ int main()
         {
           downloaddata = (node.getAgreement().data_0 << 8) | node.getAgreement().data_1 ;
         }
-        else
-        {
-          node.sendData(0);
-        }
       }
     }
     else
@@ -53,6 +49,7 @@ int main()
       
       int earth_val = 1023 - analogRead(earth_Pin);
       int e = earth_val + (0x3 << 10) + (0x2 << 12);
+
 
       //Serial.println(earth_val);
       node.sendData(e, 0xff);

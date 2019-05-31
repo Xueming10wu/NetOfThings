@@ -43,10 +43,6 @@ int main()
         {
           downloaddata = (node.getAgreement().data_0 << 8) | node.getAgreement().data_1 ;
         }
-        else
-        {
-          node.sendData(0);
-        }
       }
     }
     else
