@@ -37,6 +37,10 @@ class Node(object):
         #返回串口对象
         print ("getSerialPort")
         return self.__serialPort
+
+    def getAgreement(self):
+        #返回Agreement实例
+        return self.__agreement
     
 
     def update(self):
